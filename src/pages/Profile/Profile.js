@@ -31,7 +31,7 @@ export default function Profile() {
                                         className="profile__input"
                                         name="name"
                                         value="Jhon Doe"
-                                        autocomplete="off"
+                                        autoComplete="off"
                                         disabled={isDisabled} />
                                 </label>
                                 <label className={clsx('profile__label', isDisabled && 'profile__label_disabled')}>
@@ -41,7 +41,7 @@ export default function Profile() {
                                         className="profile__input"
                                         name="email"
                                         value="JhonDoe@yandex.ru"
-                                        autocomplete="off"
+                                        autoComplete="off"
                                         disabled={isDisabled}
                                     />
                                 </label>
