@@ -1,0 +1,49 @@
+.error404 {
+    text-align: center;
+    flex: auto;
+  }
+  
+  .error404__title {
+    margin: 246px 0 5px;
+    font-size: 140px;
+    font-weight: 400;
+    line-height: normal;
+  }
+  
+  .error404__text {
+    margin: 0 0 184px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: normal;
+  }
+  
+  .error404__button {
+    color: #FF6838;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: normal;
+    background: none;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .error404__title {
+      margin-top: 408px;
+    }
+  }
+  
+  @media screen and (max-width: 450px) {
+    .error404__title {
+      margin: 329px 0 10px;
+      font-size: 80px;
+    }
+  
+    .error404__text {
+      font-size: 12px;
+      margin-bottom:284px;
+    }
+  
+    .error404__button {
+      font-size: 12px;
+    }
+  }
+  
