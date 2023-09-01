@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import Page from '../Page/Page';
 import Title from '../Title/Title';
-import photo from '../../img/about.png';
+import photo from '../../images/about.png';
 import './AboutMe.css';
 
 export default function AboutMe() {
@@ -28,7 +28,7 @@ export default function AboutMe() {
               Github
             </Link>
           </div>
-          <img src={photo} alt="Фотограция в профиле" className="about-me__photo" />
+          <img src={photo} alt="Фотография автора проекта" className="about-me__photo" />
         </div>
       </Page>
     </section>

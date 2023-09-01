@@ -36,7 +36,7 @@
 }
 
 .portfolio__icon {
-  background: url('../../img/arrow.svg') no-repeat center;
+  background: url('../../images/arrow.svg') no-repeat center;
   width: 29px;
   height: 60px;
 }
@@ -79,7 +79,7 @@
   }
 
   .portfolio__icon {
-    background: url('../../img/arrow-320.svg') no-repeat center;
+    background: url('../../images/arrow-320.svg') no-repeat center;
     width: 18px;
     height: 28px;
     transform: translateY(-5px);

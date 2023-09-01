@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import Page from '../../components/Page/Page';
 import MainStyleFlex from '../../components/MainStyleFlex/MainStyleFlex';
-import Footer from '../../components/Footer/Footer';
 import './Error404.css';
 
 export default function Error404() {
@@ -24,7 +23,6 @@ export default function Error404() {
                     </Page>
                 </section>
             </MainStyleFlex>
-            <Footer />
         </>
     );
 }

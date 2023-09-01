@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import Page from '../../components/Page/Page';
 import Logo from '../../components/Logo/Logo';
-import Footer from '../../components/Footer/Footer';
 import MainStyleFlex from '../../components/MainStyleFlex/MainStyleFlex';
 import './Auth.css';
 
@@ -19,7 +18,11 @@ export default function Auth({ type }) {
                                     Имя
                                     <input
                                         type="text"
+                                        min="3"
+                                        max="15"
                                         name="name"
+                                        required="required"
+                                        placeholder="Самое_лучшее_имя"
                                         className="auth__input" />
                                 </label>
                             )}
@@ -28,13 +31,19 @@ export default function Auth({ type }) {
                                 <input
                                     type="email"
                                     name="email"
+                                    required="required"
+                                    placeholder="JhonDoe@yandex.ru"
                                     className="auth__input" />
                             </label>
                             <label className="auth__label">
                                 Пароль
                                 <input
                                     type="password"
+                                    min="6"
+                                    max="20"
                                     name="password"
+                                    required="required"
+                                    placeholder="Супер_секретный_пароль"
                                     className="auth__input" />
                                 {type !== 'signin' && <span className="auth__error">Что-то пошло не так...</span>}
                             </label>
@@ -55,7 +64,6 @@ export default function Auth({ type }) {
                     </section>
                 </Page>
             </MainStyleFlex>
-            <Footer />
         </>
     );
 }

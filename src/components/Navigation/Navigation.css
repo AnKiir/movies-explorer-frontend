@@ -62,7 +62,7 @@
 .header__button-burger {
   justify-self: flex-end;
   padding: 0;
-  background: url('../../img/burger.svg') no-repeat;
+  background: url('../../images/burger.svg') no-repeat;
   width: 44px;
   height: 44px;
 }
@@ -113,7 +113,7 @@
   align-self: flex-end;
   width: 44px;
   height: 44px;
-  background: url('../../img/close.svg') no-repeat center;
+  background: url('../../images/close.svg') no-repeat center;
 }
 
 .header__burger-list {
@@ -194,7 +194,7 @@
 
   .header__button-burger {
     justify-self: flex-end;
-    background: url('../../img/burger.svg') no-repeat;
+    background: url('../../images/burger.svg') no-repeat;
     background-size: 36px 35px;
     width: 38px;
     height: 38px;

@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../../components/Header/Header';
-import Footer from '../../components/Footer/Footer';
 import MainStyleFlex from '../../components/MainStyleFlex/MainStyleFlex';
 import Page from '../../components/Page/Page';
 import clsx from 'clsx';
@@ -62,7 +61,6 @@ export default function Profile() {
                     </Page>
                 </section>
             </MainStyleFlex>
-            <Footer />
         </>
     );
 }
