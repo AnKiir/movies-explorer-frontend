@@ -43,7 +43,7 @@ export default function Auth({ type }) {
                                     max="20"
                                     name="password"
                                     required="required"
-                                    placeholder="Супер_секретный_пароль"
+                                    placeholder="***********"
                                     className="auth__input" />
                                 {type !== 'signin' && <span className="auth__error">Что-то пошло не так...</span>}
                             </label>
