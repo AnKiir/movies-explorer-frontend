@@ -1,6 +1,6 @@
 .techs {
   background: #F5F5F5;
-  padding: 100px 0;
+  padding: 97px 0;
 }
 
 .techs__title {
@@ -45,11 +45,11 @@
 
 @media screen and (max-width: 768px) {
   .techs {
-    padding: 91px 20px;
+    padding: 88px 20px;
   }
 
   .techs__title {
-    margin: 80px 0 22px;
+    margin: 79px 0 22px;
   }
 
   .techs__text {
@@ -70,7 +70,7 @@
 @media screen and (max-width: 450px) {
   .techs {
     background: #FFF;
-    padding: 70px 8px;
+    padding: 63px 8px;
   }
 
   .techs__title {

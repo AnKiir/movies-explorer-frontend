@@ -1,5 +1,5 @@
 .about-project {
-  padding: 110px 0;
+  padding: 113px 0;
 }
 
 .about-project__list {
@@ -63,7 +63,7 @@
 
 @media screen and (max-width: 768px) {
   .about-project {
-    padding: 90px 20px;
+    padding: 93px 20px;
   }
 
   .about-project__list {
@@ -86,7 +86,7 @@
 
 @media screen and (max-width: 450px) {
   .about-project {
-    padding: 71px 8px;
+    padding: 76px 8px;
   }
 
   .about-project__list {

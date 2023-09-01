@@ -6,7 +6,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 24px 0;
+  padding: 22px 0;
 }
 
 .nav-tab__list {
@@ -30,7 +30,7 @@
   }
 
   .nav-tab__nav {
-    padding: 22px 0;
+    padding: 20px 0;
   }
 
   .nav-tab__link {
