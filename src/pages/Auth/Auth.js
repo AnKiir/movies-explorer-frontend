@@ -1,19 +1,24 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { login, register } from '../../utils/MainApi';
+import { useState } from 'react';
+// import { _, _ } from ''../../utils/shemas;
 import Page from '../../components/Page/Page';
 import Logo from '../../components/Logo/Logo';
 import MainStyleFlex from '../../components/MainStyleFlex/MainStyleFlex';
 import './Auth.css';
 
-export default function Auth({ type }) {
+export default function Auth({ setIsLogin }) {
+    const { pathname } = useLocation();
+
     return (
         <>
             <MainStyleFlex>
                 <Page>
                     <section className="auth" aria-label="Вход">
                         <Logo />
-                        <h1 className="auth__title">{type === 'signin' ? 'Рады видеть!' : 'Добро пожаловать!'}</h1>
+                        <h1 className="auth__title">{pathname === 'signin' ? 'Рады видеть!' : 'Добро пожаловать!'}</h1>
                         <form className="auth__form">
-                            {type !== 'signin' && (
+                            {pathname !== 'signin' && (
                                 <label className="auth__label">
                                     Имя
                                     <input
@@ -23,7 +28,8 @@ export default function Auth({ type }) {
                                         name="name"
                                         required="required"
                                         placeholder="Самое_лучшее_имя"
-                                        className="auth__input" />
+                                        className="auth__input"
+                                        autoComplete="on" />
                                 </label>
                             )}
                             <label className="auth__label">
@@ -33,7 +39,8 @@ export default function Auth({ type }) {
                                     name="email"
                                     required="required"
                                     placeholder="JhonDoe@yandex.ru"
-                                    className="auth__input" />
+                                    className="auth__input"
+                                    autoComplete="on" />
                             </label>
                             <label className="auth__label">
                                 Пароль
@@ -44,19 +51,21 @@ export default function Auth({ type }) {
                                     name="password"
                                     required="required"
                                     placeholder="***********"
-                                    className="auth__input" />
-                                {type !== 'signin' && <span className="auth__error">Что-то пошло не так...</span>}
+                                    className="auth__input"
+                                    autoComplete="on" />
+                                {pathname !== 'signin' && <span className="auth__error">Что-то пошло не так...</span>}
                             </label>
+
                             <div className="auth__buttons-wrapper">
                                 <button type="submit" className="auth__button button">
-                                    {type === 'signin' ? 'Войти' : 'Зарегистрироваться'}
+                                    {pathname === 'signin' ? 'Войти' : 'Зарегистрироваться'}
                                 </button>
                                 <div className="auth__link-wrapper">
                                     <span className="auth__question">
-                                        {type === 'signin' ? 'Ещё не зарегистрированы?' : 'Уже зарегистрированы?'}
+                                        {pathname === 'signin' ? 'Ещё не зарегистрированы?' : 'Уже зарегистрированы?'}
                                     </span>
-                                    <Link className="auth__link link" to={type === 'signin' ? '/signup' : '/signin'}>
-                                        {type === 'signin' ? 'Регистрация' : 'Войти'}
+                                    <Link className="auth__link link" to={pathname === 'signin' ? '/signup' : '/signin'}>
+                                        {pathname === 'signin' ? 'Регистрация' : 'Войти'}
                                     </Link>
                                 </div>
                             </div>

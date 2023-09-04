@@ -1,16 +1,15 @@
-import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { getUserInfo, checkToken, logout } from '../../utils/MainApi';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
-import './App.css';
 
 import Main from '../../pages/Main/Main';
 import Auth from '../../pages/Auth/Auth';
 import Profile from '../../pages/Profile/Profile';
 import Movies from '../../pages/Movies/Movies';
-import SavedMovies from '../../pages/SavedMovies/SavedMovies';
 import Error404 from '../../pages/Error404/Error404';
+import './App.css';
 
 export default function App() {
 
@@ -32,24 +31,71 @@ export default function App() {
     }
   };
 
+  const clearData = () => {
+    localStorage.removeItem('isLogin');
+    setIsLogin(false);
+    navigate('/');
+  };
+
+  const closeProfile = () => {
+    if (pathname === '/profile') {
+      logout()
+        .then(() => {
+          clearData();
+        })
+        .catch((err) => {
+          setServerError(err);
+        });
+    } else {
+      clearData();
+    }
+  };
+
+// объединить?
   useEffect(() => {
     getUserInfoHandler();
   }, [isLogin]);
+
+
+  useEffect(() => {
+    if (localStorage.getItem('isLogin')) {
+      checkToken()
+        .then(() => {
+          setIsLogin(true);
+        })
+        .catch((err) => {
+          setServerError(err);
+          closeProfile();
+        });
+    }
+  }, []);
 
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <Routes>
         <Route path="/">
-          <Route index element={<Main isLogin={isLogin} />} />
-          <Route path="movies" element={<ProtectedRoute isLogin={isLogin} element={Movies} />} />
-          <Route path="saved-movies" element={<ProtectedRoute isLogin={isLogin} element={Movies} />} />
-          <Route path="profile" element={<Profile />} />
-          <Route path="signin" element={<Auth type="signin" />} />
-          <Route path="signup" element={<Auth type="signup" />} />
-          <Route path="*" element={<Error404 />} />
+          <Route
+            index element={<Main isLogin={isLogin} />} />
+          <Route path="movies"
+            element={<ProtectedRoute
+              isLogin={isLogin}
+              element={Movies} />} />
+          <Route path="saved-movies"
+            element={<ProtectedRoute
+              isLogin={isLogin}
+              element={Movies} />} />
+          <Route path="profile"
+            element={<Profile />} />
+          <Route path="signin"
+            element={<Auth type="signin" />} />
+          <Route path="signup"
+            element={<Auth type="signup" />} />
+          <Route path="*"
+            element={<Error404 />} />
         </Route>
       </Routes>
+      {serverError}
     </CurrentUserContext.Provider>
   );
 }

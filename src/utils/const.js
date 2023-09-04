@@ -1,5 +1,3 @@
-const URL = "https://apikerokir.nomoreparties.co";
-
 const Hartya = [
     {
         link: './images/film-1.png',
@@ -97,6 +95,8 @@ const Hartya = [
         isLike: true,
         duration: 20,
     }
-]
+];
 
-export { URL, Hartya };
+const URL = 'https://apikerokir.nomoreparties.co';
+
+export { Hartya, URL };

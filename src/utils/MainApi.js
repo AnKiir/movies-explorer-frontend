@@ -1,4 +1,4 @@
-import URL from "./const";
+import { URL } from "./const";
 
 const getResponseData = (res, errorMessage) => {
     return res.ok ? res.json() : Promise.reject(errorMessage);
