@@ -16,9 +16,9 @@ export default function Auth({ setIsLogin }) {
                 <Page>
                     <section className="auth" aria-label="Вход">
                         <Logo />
-                        <h1 className="auth__title">{pathname === 'signin' ? 'Рады видеть!' : 'Добро пожаловать!'}</h1>
+                        <h1 className="auth__title">{pathname === '/signin' ? 'Рады видеть!' : 'Добро пожаловать!'}</h1>
                         <form className="auth__form">
-                            {pathname !== 'signin' && (
+                            {pathname === '/signup' && (
                                 <label className="auth__label">
                                     Имя
                                     <input
@@ -53,19 +53,19 @@ export default function Auth({ setIsLogin }) {
                                     placeholder="***********"
                                     className="auth__input"
                                     autoComplete="on" />
-                                {pathname !== 'signin' && <span className="auth__error">Что-то пошло не так...</span>}
+                                {pathname === '/signin' && <span className="auth__error">Что-то пошло не так...</span>}
                             </label>
 
                             <div className="auth__buttons-wrapper">
                                 <button type="submit" className="auth__button button">
-                                    {pathname === 'signin' ? 'Войти' : 'Зарегистрироваться'}
+                                    {pathname === '/signin' ? 'Войти' : 'Зарегистрироваться'}
                                 </button>
                                 <div className="auth__link-wrapper">
                                     <span className="auth__question">
-                                        {pathname === 'signin' ? 'Ещё не зарегистрированы?' : 'Уже зарегистрированы?'}
+                                        {pathname === '/signin' ? 'Ещё не зарегистрированы?' : 'Уже зарегистрированы?'}
                                     </span>
-                                    <Link className="auth__link link" to={pathname === 'signin' ? '/signup' : '/signin'}>
-                                        {pathname === 'signin' ? 'Регистрация' : 'Войти'}
+                                    <Link className="auth__link link" to={pathname === '/signin' ? '/signup' : '/signin'}>
+                                        {pathname === '/signin' ? 'Регистрация' : 'Войти'}
                                     </Link>
                                 </div>
                             </div>
