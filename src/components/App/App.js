@@ -1,6 +1,7 @@
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import { getUserInfo, checkToken, logout } from '../../utils/MainApi';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import './App.css';
 
@@ -19,13 +20,30 @@ export default function App() {
   const { pathname } = useLocation();
   const [serverError, setServerError] = useState('');
 
+  const getUserInfoHandler = () => {
+    if (isLogin) {
+      getUserInfo()
+        .then((userInfo) => {
+          setCurrentUser(userInfo);
+        })
+        .catch((err) => {
+          setServerError(err);
+        });
+    }
+  };
+
+  useEffect(() => {
+    getUserInfoHandler();
+  }, [isLogin]);
+
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <Routes>
         <Route path="/">
-          <Route index element={<Main />} />
+          <Route index element={<Main isLogin={isLogin} />} />
           <Route path="movies" element={<ProtectedRoute isLogin={isLogin} element={Movies} />} />
-          <Route path="saved-movies" element={<SavedMovies />} />
+          <Route path="saved-movies" element={<ProtectedRoute isLogin={isLogin} element={Movies} />} />
           <Route path="profile" element={<Profile />} />
           <Route path="signin" element={<Auth type="signin" />} />
           <Route path="signup" element={<Auth type="signup" />} />

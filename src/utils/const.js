@@ -1,4 +1,4 @@
-const Url = "https://apikerokir.nomoreparties.co";
+const URL = "https://apikerokir.nomoreparties.co";
 
 const Hartya = [
     {
@@ -99,4 +99,4 @@ const Hartya = [
     }
 ]
 
-export { Url, Hartya };
+export { URL, Hartya };
