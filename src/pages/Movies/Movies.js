@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+import { useResize } from '../../hooks/useResize';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import SearchForm from '../../components/SearchForm/SearchForm';

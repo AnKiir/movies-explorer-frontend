@@ -8,10 +8,10 @@ import Portfolio from '../../components/Portfolio/Portfolio';
 import Footer from '../../components/Footer/Footer';
 import MainStyleFlex from '../../components/MainStyleFlex/MainStyleFlex';
 
-export default function Main() {
+export default function Main({ isLogin }) {
     return (
         <>
-            <Header />
+            <Header isLogin={isLogin} />
             <MainStyleFlex>
                 <Hero />
                 <NavTab />

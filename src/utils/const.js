@@ -1,3 +1,5 @@
+const Url = "https://apikerokir.nomoreparties.co";
+
 const Hartya = [
     {
         link: './images/film-1.png',
@@ -97,4 +99,4 @@ const Hartya = [
     }
 ]
 
-export { Hartya };
+export { Url, Hartya };
