@@ -97,6 +97,8 @@ const Hartya = [
     }
 ];
 
-const URL = 'https://apikerokir.nomoreparties.co';
+// const URL = 'https://apikerokir.nomoreparties.co';
+const BASE_URL = "http://localhost:3000";
+// const BASE_URL = "https://api.nomoreparties.co";
 
-export { Hartya, URL };
+export { Hartya, BASE_URL };

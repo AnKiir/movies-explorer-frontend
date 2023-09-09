@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
-import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { getUserInfo, checkToken, logout } from '../../utils/MainApi';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
 import Main from '../../pages/Main/Main';
@@ -33,6 +33,8 @@ export default function App() {
 
   const clearData = () => {
     localStorage.removeItem('isLogin');
+    localStorage.removeItem('films');
+    localStorage.removeItem('isLogin');
     setIsLogin(false);
     navigate('/');
   };
@@ -51,7 +53,7 @@ export default function App() {
     }
   };
 
-// объединить?
+  // объединить?
   useEffect(() => {
     getUserInfoHandler();
   }, [isLogin]);
@@ -70,29 +72,32 @@ export default function App() {
     }
   }, []);
 
-
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <Routes>
         <Route path="/">
           <Route
             index element={<Main isLogin={isLogin} />} />
-          <Route path="movies"
-            element={<ProtectedRoute
+          <Route path="movies" element={
+            <ProtectedRoute
               isLogin={isLogin}
               element={Movies} />} />
-          <Route path="saved-movies"
-            element={<ProtectedRoute
+          <Route path="saved-movies" element={
+            <ProtectedRoute
               isLogin={isLogin}
               element={Movies} />} />
-          <Route path="profile"
-            element={<Profile />} />
-          <Route path="signin"
-            element={<Auth type="signin" />} />
-          <Route path="signup"
-            element={<Auth type="signup" />} />
-          <Route path="*"
-            element={<Error404 />} />
+          <Route path="profile" element={
+            <ProtectedRoute
+              isLogin={isLogin}
+              setIsLogin={setIsLogin}
+              getUserInfoHandler={getUserInfoHandler}
+              exitProfile={closeProfile}
+              element={Profile} />} />
+          <Route path="signin" element={
+            isLogin && pathname === '/signin' ? navigate(-1) : <Auth setIsLogin={setIsLogin} />} />
+          <Route path="signup" element={
+            isLogin && pathname === '/signup' ? navigate(-1) : <Auth setIsLogin={setIsLogin} />} />
+          <Route path="*" element={<Error404 />} />
         </Route>
       </Routes>
       {serverError}

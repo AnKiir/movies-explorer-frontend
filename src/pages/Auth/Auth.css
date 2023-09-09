@@ -64,6 +64,15 @@
   padding: 14px 25px;
 }
 
+.auth__button:disabled {
+  cursor: auto;
+  background: #A0A0A0;
+}
+
+.auth__button:disabled:hover {
+  opacity: 1;
+}
+
 .auth__link-wrapper {
   display: flex;
   justify-content: center;
