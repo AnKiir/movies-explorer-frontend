@@ -1,8 +1,8 @@
 import clsx from 'clsx';
 import './MovieCard.css';
 
-export default function MovieCard({ film, type }) {
-    const { link, name, isLike, duration } = film;
+export default function MovieCard({ movie, type }) {
+    const { link, name, isLike, duration } = movie;
 
     const hours = Math.floor(duration / 60);
     const minutes = duration % 60;

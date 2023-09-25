@@ -1,24 +1,24 @@
-const searchFilms = (filmsData, query, checkShortFilms, checkShortFilmsSaved) => {
-    let filmsFilter;
+const searchMovies = (moviesData, query, checkShortMovies, checkShortMoviesSaved) => {
+    let moviesFilter;
 
-    if (query !== null && Array.isArray(filmsData)) {
-        filmsFilter = filmsData.filter(
-            (film) =>
-                film.nameRU
+    if (query !== null && Array.isArray(moviesData)) {
+        moviesFilter = moviesData.filter(
+            (movie) =>
+                movie.nameRU
                     .trim()
                     .split(' ')
                     .some((word) => word.match(RegExp(`^${query.trim()}`, 'i'))) ||
-                film.nameEN
+                movie.nameEN
                     .trim()
                     .split(' ')
                     .some((word) => word.match(RegExp(`^${query.trim()}`, 'i'))) ||
-                film.nameRU
+                movie.nameRU
                     .trim()
                     .split(/[.,/?'"!@#$%^&*()_+~`№^;:&|<>\-=\\{}«»[]/)
                     .join('')
                     .split(' ')
                     .some((word) => word.match(RegExp(`^${query.trim()}`, 'i'))) ||
-                film.nameEN
+                movie.nameEN
                     .trim('')
                     .split(/[.,/?'"!@#$%^&*()_+~`№^;:&|<>\-=\\{}«»[]/)
                     .join('')
@@ -26,16 +26,12 @@ const searchFilms = (filmsData, query, checkShortFilms, checkShortFilmsSaved) =>
                     .some((word) => word.match(RegExp(`^${query.trim()}`, 'i')))
         );
     }
-
-    if (query === '') {
-        filmsFilter = filmsData;
+    if (query === '') { moviesFilter = moviesData; }
+    if (checkShortMovies || checkShortMoviesSaved) {
+        moviesFilter = moviesFilter.filter((movie) => movie.duration <= 40);
     }
 
-    if (checkShortFilms || checkShortFilmsSaved) {
-        filmsFilter = filmsFilter.filter((film) => film.duration <= 40);
-    }
-
-    return filmsFilter;
+    return moviesFilter;
 };
 
-export { searchFilms };
+export { searchMovies };

@@ -1,27 +1,52 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+// import { useNavigate } from 'react-router-dom';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import Header from '../../components/Header/Header';
 import MainStyleFlex from '../../components/MainStyleFlex/MainStyleFlex';
 import Page from '../../components/Page/Page';
+import useForm from '../../hooks/useForm';
 import clsx from 'clsx';
 import './Profile.css';
 
-export default function Profile() {
-    const navigate = useNavigate();
+export default function Profile({ isLoggedIn, logOut, onUpdateProfile }) {
+    const { enteredValues, isError, isFormValid, handleChangeInput, resetForm } = useForm();
+    const currentUser = useContext(CurrentUserContext);
+    const [lastDetails, setLastDetails] = useState(false);
     const [isDisabled, setIsDisabled] = useState(true);
 
-    const onDisabled = (evt) => {
-        evt.preventDefault();
-        setIsDisabled(!isDisabled);
-    };
+    function onSubmitUserForm(e) {
+        e.preventDefault();
+        onUpdateProfile({
+            name: enteredValues.name,
+            email: enteredValues.email,
+        });
+    }
+
+    useEffect(() => {
+        if (
+            currentUser.name === enteredValues.name &&
+            currentUser.email === enteredValues.email
+        ) {
+            setLastDetails(true);
+        } else {
+            setLastDetails(false);
+        }
+    }, [enteredValues]);
+
+    useEffect(() => {
+        if (currentUser) {
+            resetForm(currentUser);
+        }
+    }, [currentUser, resetForm]);
+
     return (
         <>
             <Header isLogin />
             <MainStyleFlex>
                 <section className="profile" aria-label="Профиль">
                     <Page>
-                        <h1 className="profile__title">Привет, #UserName!</h1>
-                        <form onSubmit={onDisabled} className="profile__form">
+                        <h1 className="profile__title">Привет, {currentUser.name}!</h1>
+                        <form className="profile__form" onSubmit={onSubmitUserForm} noValidate>
                             <div>
                                 <label className={clsx('profile__label', isDisabled && 'profile__label_disabled')}>
                                     <span className="profile__label-text">Имя</span>
@@ -29,9 +54,10 @@ export default function Profile() {
                                         type="text"
                                         className="profile__input"
                                         name="name"
-                                        value="Jhon Doe"
                                         autoComplete="off"
-                                        disabled={isDisabled} />
+                                        placeholder={currentUser.name}
+                                        value={enteredValues.name || ''}
+                                        onChange={handleChangeInput} />
                                 </label>
                                 <label className={clsx('profile__label', isDisabled && 'profile__label_disabled')}>
                                     <span className="profile__label-text">E-mail</span>
@@ -39,9 +65,10 @@ export default function Profile() {
                                         type="text"
                                         className="profile__input"
                                         name="email"
-                                        value="JhonDoe@yandex.ru"
                                         autoComplete="off"
-                                        disabled={isDisabled}
+                                        placeholder={currentUser.email}
+                                        value={enteredValues.email || ''}
+                                        onChange={handleChangeInput}
                                     />
                                 </label>
                             </div>
@@ -50,7 +77,7 @@ export default function Profile() {
                                     {isDisabled ? 'Редактировать' : 'Сохранить'}
                                 </button>
                                 <button
-                                    onClick={() => navigate('/')}
+                                    onClick={logOut}
                                     type="button"
                                     className="profile__button profile__button_type_logout button"
                                 >

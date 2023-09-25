@@ -1,51 +1,24 @@
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { authorize, register } from '../../utils/MainApi';
-import { registerSchema, loginSchema } from '../../utils/yup';
-import { yupResolver } from '@hookform/resolvers/yup';
+import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import Page from '../../components/Page/Page';
 import Logo from '../../components/Logo/Logo';
 import MainStyleFlex from '../../components/MainStyleFlex/MainStyleFlex';
 import ErrorField from '../../components/ErrorField/ErrorField';
-import './Auth.css';
+import useForm from '../../hooks/useForm';
+import '../../pages/Auth/Auth.css';
 
-export default function Auth({ setIsLoggedIn }) {
+export default function Registration({ onRegister }) {
+    const { enteredValues, isError, isFormValid, handleChangeInput } = useForm();
     const { pathname } = useLocation();
-    const {
-        register,
-        handleSubmit,
-        formState: { errors, isValid },
-    } = useForm({ resolver: yupResolver(pathname === '/signin' ? loginSchema : registerSchema) });
-    const navigate = useNavigate();
-    const [serverError, setServerError] = useState('');
 
-    const onSubmit = (data) => {
-        if (pathname === '/signin') {
-            if (data.name) {
-                delete data.name;
-            }
-            authorize(data)
-                .then(() => {
-                    setIsLoggedIn(true);
-                    localStorage.setItem('isLoggedIn', true);
-                    navigate('/movies');
-                })
-                .catch((err) => setServerError(err));
-        } else {
-            register(data)
-                .then(() =>
-                    authorize({ email: data.email, password: data.password })
-                        .then(() => {
-                            setIsLoggedIn(true);
-                            localStorage.setItem('isLoggedIn', true);
-                            navigate('/movies');
-                        })
-                        .catch((err) => setServerError(err))
-                )
-                .catch((err) => setServerError(err));
-        }
-    };
+    function onSubmitRegistrationForm(e) {
+        e.preventDefault();
+        onRegister({
+            name: enteredValues.name,
+            email: enteredValues.email,
+            password: enteredValues.password,
+        });
+    }
 
     return (
         <>
@@ -55,12 +28,12 @@ export default function Auth({ setIsLoggedIn }) {
                         <Logo />
                         <h1 className="auth__title">{pathname === '/signin' ? 'Рады видеть!' : 'Добро пожаловать!'}</h1>
                         <form className="auth__form"
-                            onSubmit={handleSubmit(onSubmit)}>
+                            onSubmit={onSubmitRegistrationForm}>
                             {pathname === '/signup' && (
                                 <>
                                     <label className="auth__label">
                                         Имя
-                                        <input {...register('name')}
+                                        <input
                                             type="text"
                                             min="3"
                                             max="15"
@@ -68,27 +41,32 @@ export default function Auth({ setIsLoggedIn }) {
                                             required="required"
                                             placeholder="Самое_лучшее_имя"
                                             className="auth__input"
-                                            autoComplete="on" />
+                                            autoComplete="on"
+                                            value={enteredValues.name || ''}
+                                            onChange={handleChangeInput} />
                                     </label>
-                                    <ErrorField isActive={errors.name}></ErrorField>
+                                    <ErrorField isActive={isError.name}></ErrorField>
                                 </>
                             )}
 
                             <label className="auth__label">
                                 E-mail
-                                <input {...register('email')}
+                                <input
                                     type="email"
                                     name="email"
                                     required="required"
                                     placeholder="JhonDoe@yandex.ru"
                                     className="auth__input"
-                                    autoComplete="on" />
+                                    pattern="\w+@\w+\.\w+"
+                                    autoComplete="on"
+                                    value={enteredValues.email || ''}
+                                    onChange={handleChangeInput} />
                             </label>
-                            <ErrorField isActive={errors.email}></ErrorField>
+                            <ErrorField isActive={isError.email}></ErrorField>
 
                             <label className="auth__label">
                                 Пароль
-                                <input {...register('password')}
+                                <input
                                     type="password"
                                     min="6"
                                     max="20"
@@ -96,14 +74,15 @@ export default function Auth({ setIsLoggedIn }) {
                                     required="required"
                                     placeholder="***********"
                                     className="auth__input"
-                                    autoComplete="on" />
+                                    autoComplete="on"
+                                    value={enteredValues.password || ''}
+                                    onChange={handleChangeInput} />
                             </label>
-                            <ErrorField isActive={errors.password}></ErrorField>
+                            <ErrorField isActive={isError.password}></ErrorField>
 
                             <div className="auth__buttons-wrapper">
-                                {serverError && <ErrorField isActive>{serverError}</ErrorField>}
                                 <button type="submit"
-                                    disabled={!isValid}
+                                    disabled={!isFormValid}
                                     className="auth__button button">
                                     {pathname === '/signin' ? 'Войти' : 'Зарегистрироваться'}
                                 </button>
@@ -122,4 +101,5 @@ export default function Auth({ setIsLoggedIn }) {
             </MainStyleFlex>
         </>
     );
+
 }
