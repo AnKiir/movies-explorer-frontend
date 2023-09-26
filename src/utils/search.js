@@ -28,7 +28,7 @@ const searchMovies = (moviesData, query, checkShortMovies, checkShortMoviesSaved
     }
     if (query === ' ') { moviesFilter = moviesData; }
     if (checkShortMovies || checkShortMoviesSaved) {
-        moviesFilter = moviesFilter.filter((movie) => movie.duration <= 40);
+        moviesFilter = moviesFilter?.filter((movie) => movie.duration <= 40);
     }
 
     return moviesFilter;
