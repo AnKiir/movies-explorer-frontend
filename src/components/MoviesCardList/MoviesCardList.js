@@ -54,7 +54,9 @@ export default function MoviesCardList({
           <ul className="movies-card-list__list list">
             {moviesLimit.map((movie) => (
               <li key={movie.id}>
-                <MoviesCard movie={movie} getMoviesHandler={getMoviesHandler} />
+                <MoviesCard
+                  movie={movie}
+                  getMoviesHandler={getMoviesHandler} />
               </li>
             ))}
           </ul>
@@ -79,13 +81,19 @@ export default function MoviesCardList({
           {!!moviesSavedSearch.length
             ? moviesSavedSearch.map((movie) => (
               <li key={movie.movieId}>
-                <MoviesCard movie={movie} isLike getMoviesHandler={getMoviesHandler} />
+                <MoviesCard
+                  movie={movie}
+                  isLike
+                  getMoviesHandler={getMoviesHandler} />
               </li>
             ))
             : !isNotFound &&
             moviesSaved.map((movie) => (
               <li key={movie.movieId}>
-                <MoviesCard movie={movie} isLike getMoviesHandler={getMoviesHandler} />
+                <MoviesCard
+                  movie={movie}
+                  isLike
+                  getMoviesHandler={getMoviesHandler} />
               </li>
             ))}
         </ul>

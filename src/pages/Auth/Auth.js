@@ -13,7 +13,7 @@ import './Auth.css';
 export default function Auth({ setIsLoggedIn }) {
     const { pathname } = useLocation();
     const {
-        register,
+        signup,
         handleSubmit,
         formState: { errors, isValid },
     } = useForm({ resolver: yupResolver(pathname === '/signin' ? loginSchema : registerSchema) });
@@ -60,7 +60,7 @@ export default function Auth({ setIsLoggedIn }) {
                                 <>
                                     <label className="auth__label">
                                         Имя
-                                        <input {...register('name')}
+                                        <input {...signup('name')}
                                             type="text"
                                             min="3"
                                             max="15"
@@ -76,7 +76,7 @@ export default function Auth({ setIsLoggedIn }) {
 
                             <label className="auth__label">
                                 E-mail
-                                <input {...register('email')}
+                                <input {...signup('email')}
                                     type="email"
                                     name="email"
                                     required="required"
@@ -88,7 +88,7 @@ export default function Auth({ setIsLoggedIn }) {
 
                             <label className="auth__label">
                                 Пароль
-                                <input {...register('password')}
+                                <input {...signup('password')}
                                     type="password"
                                     min="6"
                                     max="20"

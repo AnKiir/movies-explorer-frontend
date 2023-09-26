@@ -5,7 +5,6 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
 import Main from '../../pages/Main/Main';
-// import Auth from '../../pages/Auth/Auth';
 import Login from '../Login/Login';
 import Register from '../Register/Register';
 import Profile from '../../pages/Profile/Profile';
@@ -116,7 +115,7 @@ export default function App() {
       mainApi
         .getUsersContent(jwt)
         .then((res) => {
-          // localStorage.removeItem('queryMovies');
+          localStorage.removeItem('queryMovies');
           setIsLogin(true);
           navigate(path);
         })

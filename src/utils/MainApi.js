@@ -19,8 +19,9 @@ const authorize = async (email, password) => {
     return fetch(`${BASE_URL}/signin`, {
         method: 'POST',
         headers: {
-            Accept: 'application/json',
+            // Accept: 'application/json',
             'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('jwt')}`,
         },
         body: JSON.stringify({ email, password }),
     }).then((res) => getResponseData(res, 'При авторизации произошла ошибка. Попробуйте еще раз.'));
@@ -30,7 +31,7 @@ const getUsersContent = async (token) => {
     return fetch(`${BASE_URL}/users/me`, {
         method: 'GET',
         headers: {
-            Accept: 'application/json',
+            // Accept: 'application/json',
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
         },
@@ -41,7 +42,7 @@ const getProfileInfo = async () => {
     return fetch(`${BASE_URL}/users/me`, {
         method: 'GET',
         headers: {
-            Accept: 'application/json',
+            // Accept: 'application/json',
             'Content-Type': 'application/json',
             Authorization: `Bearer ${localStorage.getItem('jwt')}`,
         },
@@ -66,7 +67,7 @@ const getMovies = async () => {
     return fetch(`${BASE_URL}/movies`, {
         method: 'GET',
         headers: {
-            Accept: 'application/json',
+            // Accept: 'application/json',
             'Content-Type': 'application/json',
             Authorization: `Bearer ${localStorage.getItem('jwt')}`,
         },
@@ -102,7 +103,7 @@ const saveMovie = async (data) => {
     return fetch(`${BASE_URL}/movies`, {
         method: 'POST',
         headers: {
-            Accept: 'application/json',
+            // Accept: 'application/json',
             'Content-Type': 'application/json',
             Authorization: `Bearer ${localStorage.getItem('jwt')}`,
         },
@@ -116,7 +117,7 @@ const removeMovie = async (id) => {
     return fetch(`${BASE_URL}/movies/${id}`, {
         method: 'DELETE',
         headers: {
-            Accept: 'application/json',
+            // Accept: 'application/json',
             'Content-Type': 'application/json',
             Authorization: `Bearer ${localStorage.getItem('jwt')}`,
         },
