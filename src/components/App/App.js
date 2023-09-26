@@ -19,7 +19,7 @@ export default function App() {
   const path = location.pathname;
   const [currentUser, setCurrentUser] = useState({ name: '', email: '' });
   const [isLogin, setIsLogin] = useState(localStorage.getItem('isLogin') || false);
-  // const [savedMovies, setSavedMovies] = useState([]);
+  const [savedMovies, setSavedMovies] = useState([]);
 
   // регистрация
   function handleRegistration({ name, email, password }) {
@@ -70,42 +70,43 @@ export default function App() {
   }
 
   // лайк фильма
-  // function handleLikeMovie(movie) {
-  //   mainApi
-  //     .saveMovie(movie)
-  //     .then((newMovie) => {
-  //       setSavedMovies([newMovie, ...savedMovies]);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //       handleAuthorizationError(err);
-  //     });
-  // }
+  function handleLikeMovie(movie) {
+    mainApi
+      .saveMovie(movie)
+      .then((newMovie) => {
+        setSavedMovies([newMovie, ...savedMovies]);
+      })
+      .catch((err) => {
+        console.log(err);
+        handleAuthorizationError(err);
+      });
+  }
 
   // убираем лайк с фильма
-  // function handleRemoveMovie(movie) {
-  //   mainApi
-  //     .removeMovie(movie._id)
-  //     .then(() => {
-  //       setSavedMovies((state) =>
-  //         state.filter((item) => item._id !== movie._id)
-  //       );
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //       handleAuthorizationError(err);
-  //     });
-  // }
+  function handleRemoveMovie(movie) {
+    mainApi
+      .removeMovie(movie._id)
+      .then(() => {
+        setSavedMovies((state) =>
+          state.filter((item) => item._id !== movie._id)
+        );
+      })
+      .catch((err) => {
+        console.log(err);
+        handleAuthorizationError(err);
+      });
+  }
 
   // псевдо логаут
   const handleLogOut = () => {
     setIsLogin(false);
     localStorage.clear();
-    localStorage.removeItem('jwt');
+    // localStorage.removeItem('jwt');
     localStorage.removeItem('movies');
     localStorage.removeItem('queryMovies');
     localStorage.removeItem('moviesSaved');
     localStorage.removeItem('isShortMovies');
+    localStorage.removeItem('isLogin');
     navigate('/');
   };
 
@@ -132,7 +133,7 @@ export default function App() {
       Promise.all([mainApi.getProfileInfo(), mainApi.getMovies()])
         .then(([user, movies]) => {
           setCurrentUser({ name: user.name, email: user.email });
-          // setSavedMovies(movies.reverse());
+          setSavedMovies(movies.reverse());
         })
         .catch((err) => {
           console.log(err);
@@ -151,9 +152,9 @@ export default function App() {
               <ProtectedRoute
                 isLogin={isLogin}
                 element={Movies}
-                // handleLikeMovie={handleLikeMovie}
-                // onRemoveMovie={handleRemoveMovie}
-                // savedMovies={savedMovies} 
+                handleLikeMovie={handleLikeMovie}
+                onRemoveMovie={handleRemoveMovie}
+                savedMovies={savedMovies} 
                 />} 
                 />
           <Route
@@ -162,9 +163,9 @@ export default function App() {
               <ProtectedRoute
                 isLogin={isLogin}
                 element={Movies}
-                // handleLikeMovie={handleLikeMovie}
-                // onRemoveMovie={handleRemoveMovie}
-                // savedMovies={savedMovies} 
+                handleLikeMovie={handleLikeMovie}
+                onRemoveMovie={handleRemoveMovie}
+                savedMovies={savedMovies} 
                 />} 
                 />
           <Route

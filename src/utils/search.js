@@ -26,7 +26,7 @@ const searchMovies = (moviesData, query, checkShortMovies, checkShortMoviesSaved
                     .some((word) => word.match(RegExp(`^${query.trim()}`, 'i')))
         );
     }
-    if (query === '') { moviesFilter = moviesData; }
+    if (query === ' ') { moviesFilter = moviesData; }
     if (checkShortMovies || checkShortMoviesSaved) {
         moviesFilter = moviesFilter.filter((movie) => movie.duration <= 40);
     }
