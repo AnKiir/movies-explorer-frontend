@@ -86,8 +86,7 @@ export default function MoviesCardList({
               {movies.map((movie) => {
                 return (
                   <MoviesCard
-                    key={isSavedMovies ? movie.movieId : movie.id}
-                    // key={isSavedMovies ? movie.id : movie._id}
+                    key={isSavedMovies ? movie._id : movie.id}
                     saved={getMovieFromSaved(savedMovies, movie)}
                     movies={movies}
                     movie={movie}
@@ -105,8 +104,7 @@ export default function MoviesCardList({
                 {movies.slice(0, displayedMovies).map((movie) => {
                   return (
                     <MoviesCard
-                      key={isSavedMovies ? movie.movieId : movie.id}
-                      // key={isSavedMovies ? movie.id : movie._id}
+                      key={isSavedMovies ? movie._id : movie.id}
                       saved={getMovieFromSaved(savedMovies, movie)}
                       movies={movies}
                       movie={movie}
