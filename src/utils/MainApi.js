@@ -4,7 +4,7 @@ const getResponseData = (res, errorMessage) => {
     return res.ok ? res.json() : Promise.reject(errorMessage);
 };
 
-const register = async (name, email, password) => {
+const register = (name, email, password) => {
     return fetch(`${BASE_URL}/signup`, {
         method: 'POST',
         headers: {
@@ -15,7 +15,7 @@ const register = async (name, email, password) => {
     }).then((res) => getResponseData(res, 'При регистрации произошла ошибка. Попробуйте еще раз.'));
 };
 
-const authorize = async (email, password) => {
+const authorize = (email, password) => {
     return fetch(`${BASE_URL}/signin`, {
         method: 'POST',
         headers: {
@@ -26,7 +26,7 @@ const authorize = async (email, password) => {
     }).then((res) => getResponseData(res, 'При авторизации произошла ошибка. Попробуйте еще раз.'));
 };
 
-const getUsersContent = async (token) => {
+const getUsersContent = (token) => {
     return fetch(`${BASE_URL}/users/me`, {
         method: 'GET',
         headers: {
@@ -36,7 +36,7 @@ const getUsersContent = async (token) => {
     }).then((res) => getResponseData(res, 'Не удалось проверить авторизацию.'));
 };
 
-const getProfileInfo = async () => {
+const getProfileInfo = () => {
     return fetch(`${BASE_URL}/users/me`, {
         method: 'GET',
         headers: {
@@ -46,7 +46,7 @@ const getProfileInfo = async () => {
     }).then((res) => getResponseData(res, 'Не удалось загрузить информацию о пользователе.'));
 };
 
-const patchProfileInfo = async (data) => {
+const patchProfileInfo = (data) => {
     return fetch(`${BASE_URL}/users/me`, {
         method: 'PATCH',
         headers: {
@@ -60,7 +60,7 @@ const patchProfileInfo = async (data) => {
     }).then((res) => getResponseData(res, 'Не удалось обновить информацию о пользователе.'));
 };
 
-const getMovies = async () => {
+const getSavedMovies = () => {
     return fetch(`${BASE_URL}/movies`, {
         method: 'GET',
         headers: {
@@ -95,8 +95,8 @@ const saveMovie = (data) => {
     );
 };
 
-const removeMovie = async (movieId) => {
-    return fetch(`${BASE_URL}/movies/${movieId}`, {
+const removeMovie = (id) => {
+    return fetch(`${BASE_URL}/movies/${id}`, {
         method: 'DELETE',
         headers: {
             Accept: 'application/json',
@@ -115,7 +115,7 @@ export {
     getUsersContent,
     getProfileInfo,
     patchProfileInfo,
-    getMovies,
+    getSavedMovies,
     saveMovie,
     removeMovie
 };

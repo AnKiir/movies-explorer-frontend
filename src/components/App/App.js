@@ -152,7 +152,7 @@ export default function App() {
     localStorage.removeItem('shortMovies');
     const jwt = localStorage.getItem('jwt');
     if (isLogin && jwt) {
-      Promise.all([mainApi.getProfileInfo(), mainApi.getMovies()])
+      Promise.all([mainApi.getProfileInfo(), mainApi.getSavedMovies()])
         .then(([user, movies]) => {
           setCurrentUser({ name: user.name, email: user.email });
           setSavedMovies(movies.reverse());

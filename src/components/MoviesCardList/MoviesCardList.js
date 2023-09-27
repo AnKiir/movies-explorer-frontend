@@ -29,7 +29,7 @@ export default function MoviesCardList({
 
   // список сохранённых
   function getMovieFromSaved(savedMovies, movie) {
-    return savedMovies.find((savedMovie) => savedMovie.movieId === movie.id);
+    return savedMovies.find((savedMovie) => savedMovie.id === movie.id);
   }
 
   function setDisplayedMoviesCount() {
