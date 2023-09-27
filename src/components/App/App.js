@@ -105,10 +105,10 @@ export default function App() {
   // убираем лайк с фильма
   function handleRemoveMovie(movie) {
     mainApi
-      .removeMovie(movie._id)
+      .removeMovie(movie.id)
       .then(() => {
         setSavedMovies((state) =>
-          state.filter((item) => item._id !== movie._id)
+          state.filter((item) => item._id !== movie.id)
         );
       })
       .catch((err) => {
