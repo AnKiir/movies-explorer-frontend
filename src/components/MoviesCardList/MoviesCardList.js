@@ -29,7 +29,7 @@ export default function MoviesCardList({
 
   // список сохранённых
   function getMovieFromSaved(savedMovies, movie) {
-    return savedMovies.find((savedMovie) => savedMovie.id === movie.id);
+    return savedMovies.find((savedMovie) => savedMovie.movieId === movie.id);
   }
 
   function setDisplayedMoviesCount() {
@@ -76,7 +76,7 @@ export default function MoviesCardList({
     setDisplayedMoviesCount();
   }, [movies]);
 
-return (
+  return (
     <section className='movies-card-list'>
       {preLoader && <Preloader />}
       {!preLoader && (
@@ -86,7 +86,8 @@ return (
               {movies.map((movie) => {
                 return (
                   <MoviesCard
-                    key={isSavedMovies ? movie._id : movie.id}
+                    key={isSavedMovies ? movie.movieId : movie.id}
+                    // key={isSavedMovies ? movie.id : movie._id}
                     saved={getMovieFromSaved(savedMovies, movie)}
                     movies={movies}
                     movie={movie}
@@ -104,7 +105,8 @@ return (
                 {movies.slice(0, displayedMovies).map((movie) => {
                   return (
                     <MoviesCard
-                      key={isSavedMovies ? movie._id : movie.id}
+                      key={isSavedMovies ? movie.movieId : movie.id}
+                      // key={isSavedMovies ? movie.id : movie._id}
                       saved={getMovieFromSaved(savedMovies, movie)}
                       movies={movies}
                       movie={movie}
@@ -119,9 +121,8 @@ return (
               {movies.length > displayedMovies ? (
                 <button
                   onClick={expandMoviesDisplay}
-                  className={`movies-card-list__button${
-                    pathname === '/saved-movies' ? '_hidden' : ''
-                  }`}
+                  className={`movies-card-list__button${pathname === '/saved-movies' ? '_hidden' : ''
+                    }`}
                   type='button'
                 >
                   Ещё
