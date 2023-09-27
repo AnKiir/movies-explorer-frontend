@@ -3,7 +3,6 @@ import { Link, useLocation } from 'react-router-dom';
 import Page from '../../components/Page/Page';
 import Logo from '../../components/Logo/Logo';
 import MainStyleFlex from '../../components/MainStyleFlex/MainStyleFlex';
-import ErrorField from '../../components/ErrorField/ErrorField';
 import useForm from '../../hooks/useForm';
 import '../../pages/Auth/Auth.css';
 
@@ -35,8 +34,8 @@ export default function Registration({ onRegister }) {
                                         Имя
                                         <input
                                             type="text"
-                                            min="3"
-                                            max="15"
+                                            minLength="3"
+                                            maxLength="15"
                                             name="name"
                                             required="required"
                                             placeholder="Самое_лучшее_имя"
@@ -45,7 +44,7 @@ export default function Registration({ onRegister }) {
                                             value={enteredValues.name || ''}
                                             onChange={handleChangeInput} />
                                     </label>
-                                    <ErrorField isActive={isError.name}></ErrorField>
+                                    <span className='auth__error'>{isError.name}</span>
                                 </>
                             )}
 
@@ -62,14 +61,13 @@ export default function Registration({ onRegister }) {
                                     value={enteredValues.email || ''}
                                     onChange={handleChangeInput} />
                             </label>
-                            <ErrorField isActive={isError.email}></ErrorField>
+                            <span className='auth__error'>{isError.email}</span>
 
                             <label className="auth__label">
                                 Пароль
                                 <input
                                     type="password"
-                                    min="6"
-                                    max="20"
+                                    minLength="6"
                                     name="password"
                                     required="required"
                                     placeholder="***********"
@@ -78,7 +76,7 @@ export default function Registration({ onRegister }) {
                                     value={enteredValues.password || ''}
                                     onChange={handleChangeInput} />
                             </label>
-                            <ErrorField isActive={isError.password}></ErrorField>
+                            <span className='auth__error'>{isError.password}</span>
 
                             <div className="auth__buttons-wrapper">
                                 <button type="submit"

@@ -3,7 +3,6 @@ import { Link, useLocation } from 'react-router-dom';
 import Page from '../../components/Page/Page';
 import Logo from '../../components/Logo/Logo';
 import MainStyleFlex from '../../components/MainStyleFlex/MainStyleFlex';
-import ErrorField from '../../components/ErrorField/ErrorField';
 import useForm from '../../hooks/useForm';
 import '../../pages/Auth/Auth.css';
 
@@ -13,7 +12,6 @@ export default function Login({ onAuthorization }) {
 
     function onSubmitLoginForm(e) {
         e.preventDefault();
-
         onAuthorization({
             email: enteredValues.email,
             password: enteredValues.password,
@@ -43,14 +41,13 @@ export default function Login({ onAuthorization }) {
                                     value={enteredValues.email || ''}
                                     onChange={handleChangeInput} />
                             </label>
-                            <ErrorField isActive={isError.email}></ErrorField>
+                            <span className='auth__error'>{isError.email}</span>
 
                             <label className="auth__label">
                                 Пароль
                                 <input
                                     type="password"
-                                    min="6"
-                                    max="20"
+                                    minLength="6"
                                     name="password"
                                     required="required"
                                     placeholder="***********"
@@ -59,7 +56,7 @@ export default function Login({ onAuthorization }) {
                                     value={enteredValues.password || ''}
                                     onChange={handleChangeInput} />
                             </label>
-                            <ErrorField isActive={isError.password}></ErrorField>
+                            <span className='auth__error'>{isError.password}</span>
 
                             <div className="auth__buttons-wrapper">
                                 <button type="submit"

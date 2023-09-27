@@ -9,7 +9,9 @@ import Login from '../Login/Login';
 import Register from '../Register/Register';
 import Profile from '../../pages/Profile/Profile';
 import Movies from '../../pages/Movies/Movies';
+import SavedMovies from '../../pages/SavedMovies/SavedMovies';
 import Error404 from '../../pages/Error404/Error404';
+import InfoTooltip from "../InfoTooltip/InfoTooltip";
 import './App.css';
 import * as mainApi from '../../utils/MainApi';
 
@@ -20,6 +22,9 @@ export default function App() {
   const [currentUser, setCurrentUser] = useState({ name: '', email: '' });
   const [isLogin, setIsLogin] = useState(localStorage.getItem('isLogin') || false);
   const [savedMovies, setSavedMovies] = useState([]);
+  const [preLoader, setPreLoader] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [isInfoToolTipOpen, setIsInfoToolTipOpen] = useState(false);
 
   // регистрация
   function handleRegistration({ name, email, password }) {
@@ -31,6 +36,8 @@ export default function App() {
       })
       .catch((err) => {
         console.log(err);
+        setIsSuccess(false);
+        setIsInfoToolTipOpen(true);
       });
   }
 
@@ -43,11 +50,18 @@ export default function App() {
           localStorage.setItem('jwt', res.token);
           navigate('/movies', { replace: true });
           setIsLogin(true);
+          setIsSuccess(true);
+          setIsInfoToolTipOpen(true);
         }
       })
       .catch((err) => {
         console.log(err);
+        setIsSuccess(false);
+        setIsInfoToolTipOpen(true)
       })
+      .finally(() => {
+        setPreLoader(false);
+      });
   }
 
   // обновление профиля
@@ -56,6 +70,8 @@ export default function App() {
       .patchProfileInfo(newProfileInfo)
       .then((data) => {
         setCurrentUser(data);
+        setIsSuccess(true);
+        setIsInfoToolTipOpen(true);
       })
       .catch((err) => {
         console.log(err);
@@ -67,6 +83,10 @@ export default function App() {
     if (err === 'Error: 401') {
       handleLogOut();
     }
+  }
+
+  function closeInfoTooltip() {
+    setIsInfoToolTipOpen(false);
   }
 
   // лайк фильма
@@ -94,6 +114,8 @@ export default function App() {
       .catch((err) => {
         console.log(err);
         handleAuthorizationError(err);
+        setIsSuccess(false);
+        setIsInfoToolTipOpen(true)
       });
   }
 
@@ -101,11 +123,11 @@ export default function App() {
   const handleLogOut = () => {
     setIsLogin(false);
     localStorage.clear();
-    // localStorage.removeItem('jwt');
+    localStorage.removeItem('jwt');
     localStorage.removeItem('movies');
-    localStorage.removeItem('queryMovies');
-    localStorage.removeItem('moviesSaved');
-    localStorage.removeItem('isShortMovies');
+    localStorage.removeItem('allMovies');
+    localStorage.removeItem('movieSearch');
+    localStorage.removeItem('shortMovies');
     localStorage.removeItem('isLogin');
     navigate('/');
   };
@@ -116,7 +138,7 @@ export default function App() {
       mainApi
         .getUsersContent(jwt)
         .then((res) => {
-          localStorage.removeItem('queryMovies');
+          localStorage.removeItem('allMovies');
           setIsLogin(true);
           navigate(path);
         })
@@ -154,20 +176,20 @@ export default function App() {
                 element={Movies}
                 handleLikeMovie={handleLikeMovie}
                 onRemoveMovie={handleRemoveMovie}
-                savedMovies={savedMovies} 
-                />} 
-                />
+                savedMovies={savedMovies}
+              />}
+          />
           <Route
             path="saved-movies"
             element={
               <ProtectedRoute
                 isLogin={isLogin}
-                element={Movies}
+                element={SavedMovies}
                 handleLikeMovie={handleLikeMovie}
                 onRemoveMovie={handleRemoveMovie}
-                savedMovies={savedMovies} 
-                />} 
-                />
+                savedMovies={savedMovies}
+              />}
+          />
           <Route
             path="profile"
             element={
@@ -180,16 +202,25 @@ export default function App() {
           <Route
             path="signin"
             element={
-              isLogin ? (<Navigate to='/movies' replace />) : <Login onAuthorization={handleAuthorization} />
+              isLogin ? (<Navigate to='/movies' replace />) : <Login preLoader={preLoader} onAuthorization={handleAuthorization} />
             } />
           <Route
             path="signup"
             element={
-              isLogin ? (<Navigate to='/movies' replace />) : <Register onRegister={handleRegistration} />
+              isLogin ? (<Navigate to='/movies' replace />) : <Register preLoader={preLoader} onRegister={handleRegistration} />
             } />
           <Route path="*" element={<Error404 />} />
         </Route>
       </Routes>
+
+      <InfoTooltip
+        textIsSuccessTrue={"Успешно"}
+        textIsSuccessFalse={"Что-то пошло не так! Попробуйте ещё раз."}
+        isSuccess={isSuccess}
+        isOpen={isInfoToolTipOpen}
+        onClose={closeInfoTooltip}
+      />
+
     </CurrentUserContext.Provider>
   );
 }

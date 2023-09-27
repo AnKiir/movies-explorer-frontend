@@ -1,108 +1,138 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { MoviesCard } from '../MoviesCard/MoviesCard';
-import ErrorField from '../ErrorField/ErrorField';
+import MoviesCard from '../MoviesCard/MoviesCard';
 import './MoviesCardList.css';
-// import Preloader from '../../components/Preloader/Preloader';
+import Preloader from '../../components/Preloader/Preloader';
+import {
+  PC_DISPLAY,
+  TABLET_DISPLAY,
+  PC_SCREEN,
+  TABLET_SCREEN,
+  MOBILE_SCREEN,
+  NEXT_PC_SCREEN_MOVIES,
+  NEXT_TABLET_SCREEN_MOVIES,
+  NEXT_MOBILE_SCREEN_MOVIES,
+} from '../../utils/const';
+
 
 export default function MoviesCardList({
   movies,
-  getMoviesHandler,
-  moviesSavedSearch,
-  moviesSaved,
-  count,
-  handleSetCount,
-  limit,
-  isNotFound,
-  serverError
+  isSavedMovies,
+  savedMovies,
+  handleLikeMovie,
+  onRemoveMovie,
+  preLoader,
 }) {
+
   const { pathname } = useLocation();
-  const [moviesLimit, setMoviesLimit] = useState([]);
-  const [isLastCardsRow, setIsLastCardsRow] = useState(false);
+  const [displayedMovies, setDisplayedMovies] = useState(0);
 
-  const findLastCardsRow = () => {
-    if (count >= movies.length) {
-      setIsLastCardsRow(true);
+  // список сохранённых
+  function getMovieFromSaved(savedMovies, movie) {
+    return savedMovies.find((savedMovie) => savedMovie.movieId === movie.id);
+  }
+
+  function setDisplayedMoviesCount() {
+    const display = window.innerWidth;
+    if (display > PC_DISPLAY) {
+      setDisplayedMovies(PC_SCREEN);
+    } else if (display > TABLET_DISPLAY) {
+      setDisplayedMovies(TABLET_SCREEN);
     } else {
-      setIsLastCardsRow(false);
+      setDisplayedMovies(MOBILE_SCREEN);
     }
-  };
+  }
 
-  const renderCards = () => {
-    setMoviesLimit(movies.slice(0, count));
-    findLastCardsRow();
-  };
-
-  // то самое ещё
-  const getMoreMovies = () => {
-    handleSetCount(count + limit);
-  };
-
-  useEffect(() => {
-    renderCards();
-  }, [count]);
+  function expandMoviesDisplay() {
+    const display = window.innerWidth;
+    if (display > PC_DISPLAY) {
+      setDisplayedMovies(displayedMovies + NEXT_PC_SCREEN_MOVIES);
+    } else if (display > TABLET_DISPLAY) {
+      setDisplayedMovies(displayedMovies + NEXT_TABLET_SCREEN_MOVIES);
+    } else {
+      setDisplayedMovies(displayedMovies + NEXT_MOBILE_SCREEN_MOVIES);
+    }
+  }
 
   useEffect(() => {
-    renderCards();
+    let resizeTimeout;
+
+    function handleResize() {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        setDisplayedMoviesCount();
+      }, 100);
+    }
+    setDisplayedMoviesCount();
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      clearTimeout(resizeTimeout);
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  useEffect(() => {
+    setDisplayedMoviesCount();
   }, [movies]);
 
-  return (
-    <section className="movies-card-list" aria-label="Картотека фильмов">
-      {serverError && <ErrorField isActive>{serverError}</ErrorField>}
-      {pathname === '/movies' && !!moviesLimit.length && (
+return (
+    <section className='movies-card-list'>
+      {preLoader && <Preloader />}
+      {!preLoader && (
         <>
-          <ul className="movies-card-list__list list">
-            {moviesLimit.map((movie) => (
-              <li key={movie.id}>
-                <MoviesCard
-                  movie={movie}
-                  getMoviesHandler={getMoviesHandler} />
-              </li>
-            ))}
-          </ul>
-
-          {pathname === '/movies' && !isLastCardsRow && (
-            <button
-              type="button"
-              className="movies-card-list__button button"
-              onClick={getMoreMovies}>
-              Ещё
-            </button>
+          {pathname === '/saved-movies' ? (
+            <ul className='movies-card-list__list list'>
+              {movies.map((movie) => {
+                return (
+                  <MoviesCard
+                    key={isSavedMovies ? movie._id : movie.id}
+                    saved={getMovieFromSaved(savedMovies, movie)}
+                    movies={movies}
+                    movie={movie}
+                    handleLikeMovie={handleLikeMovie}
+                    isSavedMovies={isSavedMovies}
+                    onRemoveMovie={onRemoveMovie}
+                    savedMovies={savedMovies}
+                  />
+                );
+              })}
+            </ul>
+          ) : (
+            <>
+              <ul className='movies-card-list__list list'>
+                {movies.slice(0, displayedMovies).map((movie) => {
+                  return (
+                    <MoviesCard
+                      key={isSavedMovies ? movie._id : movie.id}
+                      saved={getMovieFromSaved(savedMovies, movie)}
+                      movies={movies}
+                      movie={movie}
+                      handleLikeMovie={handleLikeMovie}
+                      isSavedMovies={isSavedMovies}
+                      onRemoveMovie={onRemoveMovie}
+                      savedMovies={savedMovies}
+                    />
+                  );
+                })}
+              </ul>
+              {movies.length > displayedMovies ? (
+                <button
+                  onClick={expandMoviesDisplay}
+                  className={`movies-card-list__button${
+                    pathname === '/saved-movies' ? '_hidden' : ''
+                  }`}
+                  type='button'
+                >
+                  Ещё
+                </button>
+              ) : (
+                ''
+              )}
+            </>
           )}
         </>
-
       )}
-      {pathname === '/movies' && !moviesLimit.length && isNotFound && (
-        <p className="movies-card-list__text-nothing">По запросу ничего не найдено</p>
-      )}
-
-      {pathname === '/saved-movies' && (
-        <ul className="movies-card-list__list list">
-          {!!moviesSavedSearch.length
-            ? moviesSavedSearch.map((movie) => (
-              <li key={movie.movieId}>
-                <MoviesCard
-                  movie={movie}
-                  isLike
-                  getMoviesHandler={getMoviesHandler} />
-              </li>
-            ))
-            : !isNotFound &&
-            moviesSaved.map((movie) => (
-              <li key={movie.movieId}>
-                <MoviesCard
-                  movie={movie}
-                  isLike
-                  getMoviesHandler={getMoviesHandler} />
-              </li>
-            ))}
-        </ul>
-      )}
-
-      {pathname === '/saved-movies' && !moviesSavedSearch.length && isNotFound && (
-        <p className="movies-card-list__text-nothing">По запросу ничего не найдено</p>
-      )}
-
     </section>
   );
 }

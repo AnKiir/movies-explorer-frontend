@@ -19,7 +19,6 @@ const authorize = async (email, password) => {
     return fetch(`${BASE_URL}/signin`, {
         method: 'POST',
         headers: {
-            // Accept: 'application/json',
             'Content-Type': 'application/json',
             Authorization: `Bearer ${localStorage.getItem('jwt')}`,
         },
@@ -31,7 +30,6 @@ const getUsersContent = async (token) => {
     return fetch(`${BASE_URL}/users/me`, {
         method: 'GET',
         headers: {
-            // Accept: 'application/json',
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
         },
@@ -42,7 +40,6 @@ const getProfileInfo = async () => {
     return fetch(`${BASE_URL}/users/me`, {
         method: 'GET',
         headers: {
-            // Accept: 'application/json',
             'Content-Type': 'application/json',
             Authorization: `Bearer ${localStorage.getItem('jwt')}`,
         },
@@ -67,57 +64,42 @@ const getMovies = async () => {
     return fetch(`${BASE_URL}/movies`, {
         method: 'GET',
         headers: {
-            // Accept: 'application/json',
             'Content-Type': 'application/json',
             Authorization: `Bearer ${localStorage.getItem('jwt')}`,
         },
     }).then((res) => getResponseData(res, 'Не удалось загрузить список фильмов.'));
 };
 
-// const saveMovie = (data) => {
-//     return fetch(`${BASE_URL}/movies`, {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/json',
-//             Authorization: `Bearer ${localStorage.getItem('jwt')}`,
-//         },
-//         body: JSON.stringify({
-//             country: data.country,
-//             director: data.director,
-//             duration: data.duration,
-//             year: data.year,
-//             description: data.description,
-//             image: `https://api.nomoreparties.co/${data.image.url}`,
-//             trailerLink: data.trailerLink,
-//             thumbnail: `https://api.nomoreparties.co/${data.image.formats.thumbnail.url}`,
-//             movieId: data.id,
-//             nameRU: data.nameRU || data.nameEN,
-//             nameEN: data.nameEN || data.nameRU,
-//         }),
-//     }).then((res) =>
-//         getResponseData(res, 'При добавлении фильма в избанное произошла ошибка. Попробуйте еще раз.')
-//     );
-// };
-
-const saveMovie = async (data) => {
+const saveMovie = (data) => {
     return fetch(`${BASE_URL}/movies`, {
         method: 'POST',
         headers: {
-            // Accept: 'application/json',
             'Content-Type': 'application/json',
             Authorization: `Bearer ${localStorage.getItem('jwt')}`,
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+            country: data.country,
+            director: data.director,
+            duration: data.duration,
+            year: data.year,
+            description: data.description,
+            image: `https://api.nomoreparties.co/${data.image.url}`,
+            trailerLink: data.trailerLink,
+            thumbnail: `https://api.nomoreparties.co/${data.image.formats.thumbnail.url}`,
+            movieId: data.id,
+            nameRU: data.nameRU || data.nameEN,
+            nameEN: data.nameEN || data.nameRU,
+        }),
     }).then((res) =>
         getResponseData(res, 'При добавлении фильма в избанное произошла ошибка. Попробуйте еще раз.')
     );
 };
 
-const removeMovie = async (id) => {
-    return fetch(`${BASE_URL}/movies/${id}`, {
+const removeMovie = async (movieId) => {
+    return fetch(`${BASE_URL}/movies/${movieId}`, {
         method: 'DELETE',
         headers: {
-            // Accept: 'application/json',
+            Accept: 'application/json',
             'Content-Type': 'application/json',
             Authorization: `Bearer ${localStorage.getItem('jwt')}`,
         },

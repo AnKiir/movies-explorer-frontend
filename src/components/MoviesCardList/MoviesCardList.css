@@ -17,9 +17,15 @@
   font-size: 12px;
   font-weight: 500;
   line-height: normal;
-  border-radius: 6px;
+  border: none;
+  /* border-radius: 40px; */
   background: #F9F9F9;
   padding: 10px 20px;
+}
+
+.movies-card-list__button:hover {
+  border-radius: 40px;
+  background: #EFFAE0;
 }
 
 .movies-card-list__text-nothing {
