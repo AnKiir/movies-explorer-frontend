@@ -1,5 +1,5 @@
-// const URL = 'https://apikerokir.nomoreparties.co';
-const BASE_URL = "http://localhost:3000";
+const BASE_URL = 'https://apikerokir.nomoreparties.co';
+// const BASE_URL = "http://localhost:3000";
 const MOVIES_URL = "https://api.nomoreparties.co/beatfilm-movies";
 
 // для карточек фильмов в поиске
