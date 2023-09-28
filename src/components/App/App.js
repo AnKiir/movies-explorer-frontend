@@ -77,6 +77,8 @@ export default function App() {
       })
       .catch((err) => {
         console.log(err);
+        setIsSuccess(false);
+        setIsInfoToolTipOpen(true)
         handleAuthorizationError(err);
       });
   }
