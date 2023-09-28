@@ -93,8 +93,7 @@ export default function MoviesCardList({
                     handleLikeMovie={handleLikeMovie}
                     isSavedMovies={isSavedMovies}
                     onRemoveMovie={onRemoveMovie}
-                    savedMovies={savedMovies}
-                  />
+                    savedMovies={savedMovies} />
                 );
               })}
             </ul>
@@ -111,8 +110,7 @@ export default function MoviesCardList({
                       handleLikeMovie={handleLikeMovie}
                       isSavedMovies={isSavedMovies}
                       onRemoveMovie={onRemoveMovie}
-                      savedMovies={savedMovies}
-                    />
+                      savedMovies={savedMovies} />
                   );
                 })}
               </ul>
@@ -121,8 +119,7 @@ export default function MoviesCardList({
                   onClick={expandMoviesDisplay}
                   className={`movies-card-list__button${pathname === '/saved-movies' ? '_hidden' : ''
                     }`}
-                  type='button'
-                >
+                  type='button'>
                   Ещё
                 </button>
               ) : (

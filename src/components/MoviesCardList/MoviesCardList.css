@@ -26,6 +26,7 @@
 .movies-card-list__button:hover {
   border-radius: 40px;
   background: #EFFAE0;
+  cursor: pointer;
 }
 
 .movies-card-list__text-nothing {
