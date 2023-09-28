@@ -12,6 +12,7 @@ import Movies from '../../pages/Movies/Movies';
 import SavedMovies from '../../pages/SavedMovies/SavedMovies';
 import Error404 from '../../pages/Error404/Error404';
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
+
 import './App.css';
 import * as mainApi from '../../utils/MainApi';
 
@@ -24,6 +25,7 @@ export default function App() {
   const [savedMovies, setSavedMovies] = useState([]);
   const [preLoader, setPreLoader] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  // всплывающие ошибки
   const [isInfoToolTipOpen, setIsInfoToolTipOpen] = useState(false);
 
   // регистрация
@@ -102,13 +104,13 @@ export default function App() {
       });
   }
 
-  // убираем лайк с фильма
+  // убираем лайк с фильма (FINALLY WORKS)
   function handleRemoveMovie(movie) {
     mainApi
       .removeMovie(movie._id)
       .then(() => {
         setSavedMovies((state) =>
-          state.filter((item) => item._id !== movie.id)
+          state.filter((item) => item._id !== movie._id)
         );
       })
       .catch((err) => {
@@ -173,8 +175,8 @@ export default function App() {
             element={
               <ProtectedRoute
                 path="movies"
-                isLogin={isLogin}
                 element={Movies}
+                isLogin={isLogin}
                 handleLikeMovie={handleLikeMovie}
                 onRemoveMovie={handleRemoveMovie}
                 savedMovies={savedMovies}
@@ -184,9 +186,9 @@ export default function App() {
             path="saved-movies"
             element={
               <ProtectedRoute
-              path="saved-movies"
-                isLogin={isLogin}
+                path="saved-movies"
                 element={SavedMovies}
+                isLogin={isLogin}
                 handleLikeMovie={handleLikeMovie}
                 onRemoveMovie={handleRemoveMovie}
                 savedMovies={savedMovies}
@@ -196,9 +198,9 @@ export default function App() {
             path="profile"
             element={
               <ProtectedRoute
+                element={Profile}
                 isLogin={isLogin}
                 setIsLogin={setIsLogin}
-                element={Profile}
                 logOut={handleLogOut}
                 onUpdateProfile={handlePatchProfile} />} />
           <Route
