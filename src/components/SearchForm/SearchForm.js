@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import Page from '../Page/Page';
 import Switch from '../Switch/Switch';
 import './SearchForm.css';
 
@@ -38,7 +39,7 @@ export default function SearchForm({
     }, [location]);
 
     return (
-        <>
+        <Page>
             <section className="search-form" aria-label="Поиск по картотеке фильмов">
                 <form
                     className="search-form__form"
@@ -65,13 +66,13 @@ export default function SearchForm({
                             ''
                         )}
                     </div>
-                    
+
                     <Switch
                         shortMovies={shortMovies}
                         onFilterMovies={onFilterMovies} />
 
                 </form>
             </section>
-        </>
+        </Page>
     );
 }

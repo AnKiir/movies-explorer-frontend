@@ -99,33 +99,29 @@ export default function Movies({
     return (
         <>
             <Header isLogin />
-                <Page>
+
             <MainStyleFlex>
+                <SearchForm
+                    searchAndFilterMovies={searchAndFilterMovies}
+                    shortMovies={shortMovies}
+                    onFilterMovies={handleShortMovieToggle}
+                    filteredMovies={filteredMovies}
+                    notFound={notFound} />
 
-                    <SearchForm
-                        searchAndFilterMovies={searchAndFilterMovies}
-                        shortMovies={shortMovies}
-                        onFilterMovies={handleShortMovieToggle}
-                        filteredMovies={filteredMovies}
+                {isLoading ? (
+                    <Preloader />
+                ) : (
+                    <MoviesCardList
+                        movies={filteredMovies}
+                        isSavedMovies={false}
+                        savedMovies={savedMovies}
+                        handleLikeMovie={handleLikeMovie}
+                        onRemoveMovie={onRemoveMovie}
                         notFound={notFound}
-                    />
-
-                    {isLoading ? (
-                        <Preloader />
-                    ) : (
-                        <MoviesCardList
-                            movies={filteredMovies}
-                            isSavedMovies={false}
-                            savedMovies={savedMovies}
-                            handleLikeMovie={handleLikeMovie}
-                            onRemoveMovie={onRemoveMovie}
-                            notFound={notFound}
-                            preLoader={preLoader}
-                        />
-                    )}
-
+                        preLoader={preLoader} />
+                )}
             </MainStyleFlex>
-                </Page>
+            
             <Footer />
         </>
     );

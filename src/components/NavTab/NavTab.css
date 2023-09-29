@@ -24,7 +24,7 @@
   text-underline-offset: 3px;
 }
 
-@media screen and (max-width: 450px) {
+@media screen and (max-width: 480px) {
   .nav-tab__list {
     gap: 24px;
   }

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Footer from '../../components/Footer/Footer';
 import Header from '../../components/Header/Header';
-import Page from '../../components/Page/Page';
 import MoviesCardList from '../../components/MoviesCardList/MoviesCardList';
 import SearchForm from '../../components/SearchForm/SearchForm';
 import MainStyleFlex from '../../components/MainStyleFlex/MainStyleFlex';
@@ -52,7 +51,6 @@ export default function SavedMovies({
             <Header isLogin />
 
             <MainStyleFlex>
-                <Page>
                     <SearchForm
                         onFilterMovies={handleShortMovieToggle}
                         searchAndFilterMovies={searchAndFilterMovies}
@@ -66,9 +64,8 @@ export default function SavedMovies({
                         savedMovies={savedMovies}
                         onRemoveMovie={onRemoveMovie}
                         notFound={notFound} />
-
-                </Page>
             </MainStyleFlex>
+            
             <Footer />
         </>
     );
