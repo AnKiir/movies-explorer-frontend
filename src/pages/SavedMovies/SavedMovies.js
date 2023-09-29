@@ -1,18 +1,72 @@
+import React, { useState, useEffect } from 'react';
 import Footer from '../../components/Footer/Footer';
 import Header from '../../components/Header/Header';
 import MoviesCardList from '../../components/MoviesCardList/MoviesCardList';
 import SearchForm from '../../components/SearchForm/SearchForm';
 import MainStyleFlex from '../../components/MainStyleFlex/MainStyleFlex';
+import { filterMovies, filterShortMovies } from '../../utils/utils';
 
-export default function SavedMovies() {
-  return (
-    <>
-      <Header isLogin />
-      <MainStyleFlex>
-        <SearchForm />
-        <MoviesCardList type="save" />
-      </MainStyleFlex>
-      <Footer />
-    </>
-  );
+export default function SavedMovies({
+    savedMovies,
+    onRemoveMovie,
+}) {
+    const [searchRequest, setSearchRequest] = useState('');
+    const [notFound, setNotFound] = useState(false);
+    const [filteredMovies, setFilteredMovies] = useState(savedMovies);
+    const [shortMovies, setShortMovies] = useState(false);
+
+    function searchAndFilterMovies(request) {
+        setSearchRequest(request);
+    }
+
+    function handleShortMovieToggle() {
+        setShortMovies(!shortMovies);
+        localStorage.setItem('shortMoviesSaved', !shortMovies);
+    }
+
+    useEffect(() => {
+        if (filteredMovies.length === 0) {
+            setNotFound(true);
+        } else {
+            setNotFound(false);
+        }
+    }, [filteredMovies]);
+
+    useEffect(() => {
+        const movieList = filterMovies(savedMovies, searchRequest);
+        setFilteredMovies(shortMovies ? filterShortMovies(movieList) : movieList);
+    }, [savedMovies, shortMovies, searchRequest]);
+
+
+    useEffect(() => {
+        if (localStorage.getItem('shortMoviesSaved') === 'true') {
+            setShortMovies(true);
+        } else {
+            setShortMovies(false);
+        }
+    }, []);
+
+    return (
+        <>
+            <Header isLogin />
+
+            <MainStyleFlex>
+                    <SearchForm
+                        onFilterMovies={handleShortMovieToggle}
+                        searchAndFilterMovies={searchAndFilterMovies}
+                        shortMovies={shortMovies}
+                        filteredMovies={filteredMovies}
+                        notFound={notFound} />
+
+                    <MoviesCardList
+                        movies={filteredMovies}
+                        isSavedMovies={true}
+                        savedMovies={savedMovies}
+                        onRemoveMovie={onRemoveMovie}
+                        notFound={notFound} />
+            </MainStyleFlex>
+            
+            <Footer />
+        </>
+    );
 }

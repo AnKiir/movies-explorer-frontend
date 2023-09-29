@@ -31,7 +31,7 @@
     }
   }
   
-  @media screen and (max-width: 450px) {
+  @media screen and (max-width: 480px) {
     .error404__title {
       margin: 329px 0 10px;
       font-size: 80px;

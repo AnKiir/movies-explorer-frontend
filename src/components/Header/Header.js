@@ -1,3 +1,4 @@
+import React from 'react';
 import Page from '../Page/Page';
 import Navigation from '../Navigation/Navigation';
 import clsx from 'clsx';
@@ -12,4 +13,3 @@ export default function Header({ isLogin }) {
       </header>
     );
   }
-  

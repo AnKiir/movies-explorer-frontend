@@ -47,7 +47,7 @@
   }
 }
 
-@media screen and (max-width: 450px) {
+@media screen and (max-width: 480px) {
   .footer__text {
     font-size: 12px;
   }

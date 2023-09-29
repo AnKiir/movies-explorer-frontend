@@ -7,3 +7,7 @@
 
 ## ССЫЛКА НА САЙТ
 [Фронтэнд проекта Movies](https://kerokir.nomoreparties.co).
+[Репозиторий с бэком](https://github.com/AnKiir/movies-explorer-api).
+
+## ССЫЛКА НА ПУЛЛ-РЕКВЕСТ
+[Pull request](https://github.com/AnKiir/movies-explorer-frontend/pull/2).
