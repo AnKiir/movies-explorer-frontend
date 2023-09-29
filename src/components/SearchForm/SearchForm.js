@@ -36,14 +36,15 @@ export default function SearchForm({
             setSearchRequest(localSearchRequest);
         }
     }, [location]);
+
     return (
         <>
             <section className="search-form" aria-label="Поиск по картотеке фильмов">
                 <form
                     className="search-form__form"
                     onSubmit={onSubmitForm}
-                    noValidate
-                >
+                    noValidate>
+
                     <div className="search-form__search-wrapper">
                         <input
                             value={searchRequest || ''}
@@ -64,9 +65,11 @@ export default function SearchForm({
                             ''
                         )}
                     </div>
+                    
                     <Switch
                         shortMovies={shortMovies}
                         onFilterMovies={onFilterMovies} />
+
                 </form>
             </section>
         </>

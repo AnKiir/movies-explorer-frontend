@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Preloader from '../../components/Preloader/Preloader';
 import Header from '../../components/Header/Header';
+import Page from '../../components/Page/Page';
 import MainStyleFlex from '../../components/MainStyleFlex/MainStyleFlex';
 import SearchForm from '../../components/SearchForm/SearchForm';
 import MoviesCardList from '../../components/MoviesCardList/MoviesCardList';
@@ -98,32 +99,33 @@ export default function Movies({
     return (
         <>
             <Header isLogin />
-
+                <Page>
             <MainStyleFlex>
 
-                <SearchForm
-                    searchAndFilterMovies={searchAndFilterMovies}
-                    shortMovies={shortMovies}
-                    onFilterMovies={handleShortMovieToggle}
-                    filteredMovies={filteredMovies}
-                    notFound={notFound}
-                />
-
-                {isLoading ? (
-                    <Preloader />
-                ) : (
-                    <MoviesCardList
-                        movies={filteredMovies}
-                        isSavedMovies={false}
-                        savedMovies={savedMovies}
-                        handleLikeMovie={handleLikeMovie}
-                        onRemoveMovie={onRemoveMovie}
+                    <SearchForm
+                        searchAndFilterMovies={searchAndFilterMovies}
+                        shortMovies={shortMovies}
+                        onFilterMovies={handleShortMovieToggle}
+                        filteredMovies={filteredMovies}
                         notFound={notFound}
-                        preLoader={preLoader}
                     />
-                )}
+
+                    {isLoading ? (
+                        <Preloader />
+                    ) : (
+                        <MoviesCardList
+                            movies={filteredMovies}
+                            isSavedMovies={false}
+                            savedMovies={savedMovies}
+                            handleLikeMovie={handleLikeMovie}
+                            onRemoveMovie={onRemoveMovie}
+                            notFound={notFound}
+                            preLoader={preLoader}
+                        />
+                    )}
 
             </MainStyleFlex>
+                </Page>
             <Footer />
         </>
     );

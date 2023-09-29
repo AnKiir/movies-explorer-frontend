@@ -1,14 +1,16 @@
-const BASE_URL = 'https://apikerokir.nomoreparties.co';
-// const BASE_URL = "http://localhost:3000";
+// const BASE_URL = 'https://apikerokir.nomoreparties.co';
+const BASE_URL = "http://localhost:3000";
 const MOVIES_URL = "https://api.nomoreparties.co/beatfilm-movies";
 
 // для карточек фильмов в поиске
-export const PC_DISPLAY = 1240;
-export const TABLET_DISPLAY = 707;
+export const PC_DISPLAY = 768;
+export const TABLET_DISPLAY = 480;
+
 export const PC_SCREEN = 12;
 export const TABLET_SCREEN = 8;
 export const MOBILE_SCREEN = 5;
-export const NEXT_PC_SCREEN_MOVIES = 3;
+
+export const NEXT_PC_SCREEN_MOVIES = 4;
 export const NEXT_TABLET_SCREEN_MOVIES = 2;
 export const NEXT_MOBILE_SCREEN_MOVIES = 2;
 

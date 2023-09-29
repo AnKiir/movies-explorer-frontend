@@ -1,5 +1,4 @@
 import React from 'react';
-// import { Link, useLocation } from 'react-router-dom';
 import Page from '../Page/Page';
 import Navigation from '../Navigation/Navigation';
 import clsx from 'clsx';
@@ -14,14 +13,3 @@ export default function Header({ isLogin }) {
       </header>
     );
   }
-
-// export default function Header({ isLogin }) {
-//   const location = useLocation();
-//   const headerClass = `header ${location.pathname === '/' ? 'header_white' : ''} ${location.pathname === '/signin' || location.pathname === '/signup'}`
-
-//   return (
-//     <header className={headerClass}>
-//       <Navigation isLogin={isLogin} />
-//     </header>
-//   )
-// }
