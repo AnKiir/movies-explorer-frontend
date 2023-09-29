@@ -10,7 +10,7 @@ import Register from '../Register/Register';
 import Profile from '../../pages/Profile/Profile';
 import Movies from '../../pages/Movies/Movies';
 import SavedMovies from '../../pages/SavedMovies/SavedMovies';
-import Error404 from '../../pages/Error404/Error404';
+import PageNotFoud from '../../pages/Error404/Error404';
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
 
 import './App.css';
@@ -169,54 +169,57 @@ export default function App() {
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
+
       <Routes>
+
         <Route path="/">
           <Route index element={<Main isLogin={isLogin} />} />
-          <Route
-            path="movies"
-            element={
-              <ProtectedRoute
-                path="movies"
-                element={Movies}
-                isLogin={isLogin}
-                handleLikeMovie={handleLikeMovie}
-                onRemoveMovie={handleRemoveMovie}
-                savedMovies={savedMovies}
-              />}
-          />
-          <Route
-            path="saved-movies"
-            element={
-              <ProtectedRoute
-                path="saved-movies"
-                element={SavedMovies}
-                isLogin={isLogin}
-                handleLikeMovie={handleLikeMovie}
-                onRemoveMovie={handleRemoveMovie}
-                savedMovies={savedMovies}
-              />}
-          />
-          <Route
-            path="profile"
-            element={
-              <ProtectedRoute
-                element={Profile}
-                isLogin={isLogin}
-                setIsLogin={setIsLogin}
-                logOut={handleLogOut}
-                onUpdateProfile={handlePatchProfile} />} />
-          <Route
-            path="signin"
-            element={
-              isLogin ? (<Navigate to='/movies' replace />) : <Login preLoader={preLoader} onAuthorization={handleAuthorization} />
-            } />
-          <Route
-            path="signup"
-            element={
-              isLogin ? (<Navigate to='/movies' replace />) : <Register preLoader={preLoader} onRegister={handleRegistration} />
-            } />
-          <Route path="*" element={<Error404 />} />
         </Route>
+
+        <Route
+          path="movies"
+          element={
+            <ProtectedRoute
+              path="movies"
+              element={Movies}
+              isLogin={isLogin}
+              handleLikeMovie={handleLikeMovie}
+              onRemoveMovie={handleRemoveMovie}
+              savedMovies={savedMovies} />} />
+
+        <Route
+          path="saved-movies"
+          element={
+            <ProtectedRoute
+              path="saved-movies"
+              element={SavedMovies}
+              isLogin={isLogin}
+              handleLikeMovie={handleLikeMovie}
+              onRemoveMovie={handleRemoveMovie}
+              savedMovies={savedMovies} />} />
+
+        <Route
+          path="profile"
+          element={
+            <ProtectedRoute
+              element={Profile}
+              isLogin={isLogin}
+              setIsLogin={setIsLogin}
+              logOut={handleLogOut}
+              onUpdateProfile={handlePatchProfile} />} />
+
+        <Route
+          path="signin"
+          element={
+            isLogin ? (<Navigate to='/movies' replace />) : <Login preLoader={preLoader} onAuthorization={handleAuthorization} />} />
+
+        <Route
+          path="signup"
+          element={
+            isLogin ? (<Navigate to='/movies' replace />) : <Register preLoader={preLoader} onRegister={handleRegistration} />} />
+
+        <Route path="*" element={<PageNotFoud />} />
+
       </Routes>
 
       <InfoTooltip

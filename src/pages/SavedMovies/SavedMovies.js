@@ -22,6 +22,7 @@ export default function SavedMovies({
 
     function handleShortMovieToggle() {
         setShortMovies(!shortMovies);
+        localStorage.setItem('shortMoviesSaved', !shortMovies);
     }
 
     useEffect(() => {
@@ -37,6 +38,15 @@ export default function SavedMovies({
         setFilteredMovies(shortMovies ? filterShortMovies(movieList) : movieList);
     }, [savedMovies, shortMovies, searchRequest]);
 
+
+    useEffect(() => {
+        if (localStorage.getItem('shortMoviesSaved') === 'true') {
+            setShortMovies(true);
+        } else {
+            setShortMovies(false);
+        }
+    }, []);
+
     return (
         <>
             <Header isLogin />
@@ -46,6 +56,7 @@ export default function SavedMovies({
                     <SearchForm
                         onFilterMovies={handleShortMovieToggle}
                         searchAndFilterMovies={searchAndFilterMovies}
+                        shortMovies={shortMovies}
                         filteredMovies={filteredMovies}
                         notFound={notFound} />
 
