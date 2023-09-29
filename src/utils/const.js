@@ -6,7 +6,7 @@ const MOVIES_URL = "https://api.nomoreparties.co/beatfilm-movies";
 export const PC_DISPLAY = 768;
 export const TABLET_DISPLAY = 480;
 
-export const PC_SCREEN = 12;
+export const PC_SCREEN = 16;
 export const TABLET_SCREEN = 8;
 export const MOBILE_SCREEN = 5;
 
